@@ -28,7 +28,7 @@ def movementAlgorythm(dronePosition=[0.00,0.00],userPosition=(0.00,0.00)):
         else:
             pass
         #X movement coordinates
-
+#shoot
             #Y movement coordinates
 
 
