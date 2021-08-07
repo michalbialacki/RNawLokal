@@ -11,7 +11,7 @@ with open('do_loop2.csv','r') as fp:
     for value in passiveUnitCom:
         tbSpl=value[0].split(';')
         if tbSpl[1]=='4':
-
+#doot
             passiveUnitXYs= np.array([[tbSpl[4],tbSpl[5]],[tbSpl[10],tbSpl[11]],[tbSpl[16],tbSpl[17]],[tbSpl[22],tbSpl[23]]])
             passiveXs=[]
             passiveYs=[]
