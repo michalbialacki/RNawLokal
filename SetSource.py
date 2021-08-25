@@ -4,6 +4,7 @@ import UserTag
 import SortCommunicates
 from time import sleep
 from matplotlib import pyplot as plt
+import Firebase_Communication
 from matplotlib.animation import FuncAnimation
 
 
@@ -21,7 +22,6 @@ class CommunicationSource:
             for value in passive_unit_com:
                 tb_spl = value[0].split(';')
                 if tb_spl[1] == '4':
-                    # doot2
                     passive_unit_xy = np.array(
                         [[tb_spl[4], tb_spl[5]], [tb_spl[10], tb_spl[11]], [tb_spl[16], tb_spl[17]], [tb_spl[22], tb_spl[23]]])
                     passive_xs = []
@@ -35,11 +35,11 @@ class CommunicationSource:
                     user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                     user1.active_unit_pos = user1.OLSAlgorythm()
                     print(user1)
-                    sleep(0.1)
+                    Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
                     print('==============')
                     plt.plot(passive_xs, passive_ys, 'bo')
                     plt.plot(user1.active_unit_pos[0], user1.active_unit_pos[1], 'r+')
-                    plt.pause(0.05)
+                    plt.pause(0.01)
                     plt.clf()
 
                 else:

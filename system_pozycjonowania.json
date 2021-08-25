@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "czystysystempozycjonowania",
+  "private_key_id": "69e21c64fc26a0792b4713dadb713c321aee3f5a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/46x0C2Izi57W\ntJQ39LEfRFbVxu4Oz4TAGNBZWr2Tk1fonR0KymnBo+e3IhXUfVVgDfLuHRq0fc9q\nfS/eO2qB6RjEitIdF+FiVX7fZ1lcPkt7RcRPVw6EtI7fklVDojzJW6Q62QaA5N1g\nyQ747146NX5Il8YPws0lp6JDFOK69mZsk6VW07wQhAr1UmxTEb6A1PPWEFmvcB5S\n77pCrrzMrTGgS3q44NSK0Gt+QYHmlPnYx4rjWCis3w1kGARuSQsVa1jG34joCf10\nRopPIde15QAFKeEVNgrlU+M8s3X71iVNRYhNUBep4YyEjUlO5gDVwZjOEc82Dr6X\nm90sdeEjAgMBAAECggEASRJNfwlAtYlDDNbKJH7JHjN7b7/nsnsivbYVTRmJXJO8\n46dEwnGvER61496WeorZwpC9RCCQJVBNdmtCmbl9hwf5Nwr4FT0dRkFxZWhpNn/A\nZap9JYtsy2sohwml73Ht/O2pXgF8AQRmKu+VhIU+mCL7unAVa7YOQfsShsICzxfR\nuRTtO7XqzfAAGhqPIrNkn6aE6xJSMHTXYr99qz2x4KQ3if1pOqjh5mYDlZ6eCkMR\npqIOg+rURyHnmVoJjGkgRDth7t8npEooiqwGoravgwNcXU4kXdG1Wa4XXuOzBHoe\njNQPUnEIBLn1WcGCHfK8UY897zxbbAZifpqk08xm5QKBgQDhOt623vnUCy85J3f5\nWMJDjjZsp0oOdS3TvGHKBvX2apFF4h2MfReXpTQ/1f0YS5Yj2CuZpwKrgOvI0kyI\nZg/pWi2ob6zAverq32IvBV+aF0KXIvVWWUhsbLPwNxOvrx4Ubfmu0YCkc1YAJlJ+\nUd0n/uw6/QSF0rYRJ30xzCn93wKBgQDaGsIn4UOyA8Ytuo/Q0ax4Lsui4MLddJrz\nmcLj6UaVVkaSNyP2fYmqDDyiXWiUfqgy9PmArTPgijPf4YcYsMXxzuYLSLqQnR0p\nRhHshst3H4U81a97AQt5BqvEDS2lkKkUM5LaUyO1W7BjemTfNlN+68Y0ly3jvofI\nBXO/rVH9PQKBgGzRtKlGMg5xGO/UUfL3H2TkYQc+DFnP48RZUCX8FvpnoqjRBtXJ\n2ow6FXSCPzZtzqyi1O338yJJt6HfeXqtVSK5nzWyPxUgrU+tfhKZ1gbtFg9PpJmD\nqao5GvcEpU5MnYvhVrFQJ4dM8lBAM7s0clXQpPIbLQQ7OhwvqB1XNzKhAoGARi07\n8ZcCsCGUv5v6sEb2xojQDu1g5d6iCOWdlrW1d1GWTW+ei64jAGsFi3ygrL8AIb0/\nFo8kVQhC3rNzQ5eFaWOYE2NoXCWhf2lDVSaeCwtCVKuw1dQlO+DQnblbyZz9OjnJ\n86OypqUE4U09bbDONtVoJf3Kzy+8Arj2YGNFMUUCgYEAikUeVqhyweuZvtYlacfC\nJhqiwmf/lU1oDUIlsqWtE5C+HmQ8NDaQYOJ6MVkdCE6ddGzazcHKYDdpeJV+C0rs\n8KtcTiZSJfkLoJ4KprkdG3re5JQ6I6n4RYRZ5v3kmPMlFZWl4K81U8mzsGKLXhSH\nT3UksR7wyxl9PcLifKGzMzE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-409i5@czystysystempozycjonowania.iam.gserviceaccount.com",
+  "client_id": "113657345743418060061",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-409i5%40czystysystempozycjonowania.iam.gserviceaccount.com"
+}
