@@ -5,3 +5,4 @@ Indoor localization system, based on UWB modules & RPi.
 #UWB
 #DecaWave
 #Localization
+Additional - some TELLO algorythms to upgrade the project to be implemented on TELLO
