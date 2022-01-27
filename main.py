@@ -1,10 +1,11 @@
+import Firebase_Communication
 import SetSource
-#import TestMode
-import timeit
-
+import schedule
+import time
 
 SetSource.CommunicationSource('csv')
 
-#timeit.timeit(lambda: SetSource.CommunicationSource('csv'),number=1)
+
+# print(timeit.timeit(lambda: SetSource.CommunicationSource('csv'),number=1))
 
 

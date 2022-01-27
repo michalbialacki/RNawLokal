@@ -1,6 +1,16 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+import asyncio
+import concurrent.futures
+
+"""
+Wysyłanie danych do Real-time DataBase od Firebase
+W przypadku wykonywania tej metody sekwencyjnie dla zestawu testowego
+czas wykonywania aplikacji wynosił 77sek
+
+Wykonywanie bez tej metody zajęło 22sek
+"""
 
 cred = credentials.Certificate('system_pozycjonowania.json')
 
@@ -10,8 +20,10 @@ firebase_admin.initialize_app(cred, {
 
 def update_firebase(wspolrzedna_x_uzytkownika, wspolrzedna_y_uzytkownika):
 
-    ref = db.reference('/Zachowane Współrzędne')
-    ref.child('Wskazane Współrzędne Użytkownika').update({
+    ref = db.reference('/Zachowane Wspolrzedne')
+    ref.child('Wskazane Wspolrzedne Uzytkownika').update({
         'wspolrzednaXSB3': wspolrzedna_x_uzytkownika,
         'wspolrzednaYSB3': wspolrzedna_y_uzytkownika
     })
+
+
