@@ -1,7 +1,5 @@
 import Firebase_Communication
 import SetSource
-import schedule
-import time
 
 SetSource.CommunicationSource('csv')
 

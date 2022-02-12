@@ -26,7 +26,7 @@ class CommunicationSource:
             self.serial_port_comm()
 
     def from_csv(self):
-        with open('do_loop4.csv','r') as fp:
+        with open('do_loop2.csv','r') as fp:
             passive_unit_com = csv.reader(fp)
             for value in passive_unit_com:
                 try:
@@ -51,7 +51,9 @@ class CommunicationSource:
                             user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                             user1.active_unit_pos = user1.OLSAlgorythm()
                             print(user1)
-                            # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
+                            Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
+                            # with open('wyniki.csv',mode='a') as wyniki:
+                            #     wyniki.writelines(f'{user1.active_unit_pos}')
                             print('==============')
                             plt.grid(True)
                             plt.plot(passive_xs, passive_ys, 'bo')
