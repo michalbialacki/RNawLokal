@@ -7,7 +7,7 @@ from time import sleep
 class MobileUnit:
     ser = ''
 
-    def __init__(self, com='COM7', baudrate=115200):
+    def __init__(self, com='COM3', baudrate=115200):
         self.com = com
         self.baudrate = baudrate
         self.ser = serial.Serial(self.com, self.baudrate)

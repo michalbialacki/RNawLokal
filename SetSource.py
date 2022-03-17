@@ -73,19 +73,40 @@ class CommunicationSource:
                 print("Zakłócenie transmisji. Pobieram kolejną paczkę danych")
             else:
                 if tb_spl[1] == '4':
-                    passive_unit_xy = np.array(
-                        [[tb_spl[4], tb_spl[5]], [tb_spl[10], tb_spl[11]], [tb_spl[16], tb_spl[17]], [tb_spl[22], tb_spl[23]]])
-                    passive_xs = []
-                    passive_ys = []
-                    passive_unit_dist = np.array([tb_spl[7], tb_spl[13], tb_spl[19], tb_spl[25]])
-                    passive_unit_xy, passive_unit_dist = SortCommunicates.XYsSort(passive_unit_xy, passive_unit_dist)
-                    if len(passive_ys) < 4 and len(passive_xs) < 4:
-                        for index, value in enumerate(passive_unit_xy):
-                            passive_xs.append(value[0])
-                            passive_ys.append(value[1])
-                    user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
-                    user1.active_unit_pos = user1.OLSAlgorythm()
-                    print(user1)
-                    Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
-                    print('==============')
+                    try:
+                        passive_unit_xy = np.array(
+                            [[tb_spl[4], tb_spl[5]], [tb_spl[10], tb_spl[11]], [tb_spl[16], tb_spl[17]], [tb_spl[22], tb_spl[23]]])
+                    except:
+                        user_tag.kill_com()
+                        self.serial_port_comm()
+                    else:
+                        passive_xs = []
+                        passive_ys = []
+                        try:
+                            passive_unit_dist = np.array([tb_spl[7], tb_spl[13], tb_spl[19], tb_spl[25]])
+                        except:
+                            user_tag.kill_com()
+                            self.serial_port_comm()
+                        else:
+                            passive_unit_xy, passive_unit_dist = SortCommunicates.XYsSort(passive_unit_xy, passive_unit_dist)
+                            try:
+                                if len(passive_ys) < 4 and len(passive_xs) < 4:
+                                    for index, value in enumerate(passive_unit_xy):
+                                        passive_xs.append(value[0])
+                                        passive_ys.append(value[1])
+                            except:
+                                user_tag.kill_com()
+                                self.serial_port_comm()
+                            else:
+                                user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
+                                user1.active_unit_pos = user1.OLSAlgorythm()
+                                print(user1)
+                                Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
+                                print('==============')
+                                plt.grid(True)
+                                plt.plot(passive_xs, passive_ys, 'bo')
+                                plt.plot(user1.active_unit_pos[0], user1.active_unit_pos[1], 'r+')
+                                plt.pause(0.001)
+                                plt.clf()
+        plt.show()
 
