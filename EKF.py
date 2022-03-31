@@ -4,16 +4,16 @@ import csv
 np.set_printoptions(precision=2)
 jacobian = np.zeros((4, 4))  # H
 T = 0.1  # okres probkowania
-S = 0.01 # widmowa gestosc mocy
-state_vect_input = np.array([.5, .1, .5, .1]).reshape((4, 1))  # wektor stanu
-err_cov_mat_input = np.diag([100, .1, 100, .1])
-R = np.diag([5, 10, 5, 10])  # m. kowariancji bledow pomiarowych
+S = 0.01  # widmowa gestosc mocy // zmieniac rzędem wielkości// sprawdzac przy zakretach
+state_vect_input = np.array([.01, .1, .01, .1]).reshape((4, 1))  # wektor stanu
+err_cov_mat_input = np.diag([100, 8.3, 100, 8.3])
+R = np.diag([0.01, 0.01, 0.01, 0.01])  # m. kowariancji bledow pomiarowych
 trans_mat = np.array([[1, T, 0, 0], [0, 1, 0, 0], [0, 0, 1, T],
                       [0, 0, 0, 1]])  # macierz tranzycyjna T=0.1 bo taki zakladam okres probkowania
 h_mat = np.zeros((4, 1))
 Q = np.array([[((S * (T ** 3)) / 3), ((S * (T ** 2)) / 2), 0, 0], [((S * (T ** 2)) / 2), (S * T), 0, 0],
-              [0, 0, ((S * (T ** 3)) / 3), ((S * (T ** 2)) / 2)], [0, 0, ((S * (T ** 2)) / 2), (S * T)]])  # m. kow. zaklocen
-
+              [0, 0, ((S * (T ** 3)) / 3), ((S * (T ** 2)) / 2)],
+              [0, 0, ((S * (T ** 2)) / 2), (S * T)]])  # m. kow. zaklocen
 
 
 def predictEKF(anchor_coor=np.array([[0, 0], [4, 0], [0, 5], [4, 5]]),
@@ -34,9 +34,9 @@ def predictEKF(anchor_coor=np.array([[0, 0], [4, 0], [0, 5], [4, 5]]),
 
 
 def updateEKF(meas=np.array([[0.74], [3.21], [5.56], [6.52]]),
-              state_vect_pred= state_vect_input,
+              state_vect_pred=state_vect_input,
               H_mat=jacobian,
-              err_cov_mat_pred= err_cov_mat_input):
+              err_cov_mat_pred=err_cov_mat_input):
     # Update
     S = H_mat @ err_cov_mat_pred @ H_mat.transpose() + R
     gain_mat = err_cov_mat_pred @ H_mat.transpose() @ np.linalg.inv(S)
@@ -69,7 +69,8 @@ if __name__ == '__main__':
         pred, covariance, jacob = predictEKF(state_vect_ini=state_vect_input, err_cov_mat_ini=err_cov_mat_input)
         state_vect_input, err_cov_mat_input = updateEKF(meas=row, state_vect_pred=pred, H_mat=jacob,
                                                         err_cov_mat_pred=covariance)
-        print(f'{state_vect_input};\n \n')
+        with open("Wynik Kalmana.txt", mode='a') as resEKF:
+            resEKF.write(f'{state_vect_input}\n/////\n')
 
     ###########################
 
