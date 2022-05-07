@@ -35,6 +35,5 @@ def OLSAlgorythm(passive_units_xy, passive_units_dist):
         for iterator in range(0, 4):
             d_est[iterator] = (((passive_units_xy[iterator][0] - active_unit_location[0]) ** 2) + (
                     (passive_units_xy[iterator][1] - active_unit_location[1]) ** 2)) ** 0.5
-            pass
         estimated_pos = active_unit_location
     return active_unit_location

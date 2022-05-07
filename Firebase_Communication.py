@@ -22,8 +22,8 @@ def update_firebase(wspolrzedna_x_uzytkownika, wspolrzedna_y_uzytkownika):
 
     ref = db.reference('/Zachowane Wspolrzedne')
     ref.child('Wskazane Wspolrzedne Uzytkownika').update({
-        'wspolrzednaXSB3': wspolrzedna_x_uzytkownika,
-        'wspolrzednaYSB3': wspolrzedna_y_uzytkownika
+        'wspolrzednaXSB3': str(wspolrzedna_x_uzytkownika),
+        'wspolrzednaYSB3': str(wspolrzedna_y_uzytkownika)
     })
 
 

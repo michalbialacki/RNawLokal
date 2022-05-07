@@ -1,4 +1,5 @@
 import numpy as np
+import ExtendedKalmanFilter
 
 """
 Algorytm obliczający pozycję obiektu/urządzenia mobilnego
@@ -9,10 +10,15 @@ wykorzystując przy tym odległości do urządzeń statycznych
 class MobileTag:
     estimated_pos = np.array([1, 2])
     active_unit_pos = []
+    EKF = ExtendedKalmanFilter.EKF()
+    EKF_result = np.array([])
+    EKF_error = np.array([])
 
     def __init__(self, passive_units_xy, passive_units_dist):
         self.passive_units_xy = passive_units_xy
         self.passive_units_dist = passive_units_dist
+        EKF = ExtendedKalmanFilter.EKF()
+        EKF.set_anchors(np.array(self.passive_units_xy))
 
     def __str__(self):
         return f"User's position {self.active_unit_pos}"
@@ -48,6 +54,16 @@ class MobileTag:
                 pass
             self.estimated_pos = active_unit_location
         return round(active_unit_location[0], 3), round(active_unit_location[1], 3)
+
+    def EKFAlgorythm(self):
+        anchors = np.array(self.passive_units_xy)
+        EKF =  self.EKF
+        EKF.set_anchors(anchors)
+        meas = np.array(self.passive_units_dist).reshape((4,1))
+        state, error = EKF.predict(anchors)
+        self.EKF.update(meas=meas, err_cov_mat_pred=error, state_pred=state)
+        temp = self.EKF.show_results()
+        return EKF.show_results()
 
 
 if __name__ == '__main__':

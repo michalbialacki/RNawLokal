@@ -1,6 +1,9 @@
 import numpy as np
 import csv
 
+import ExtendedKalmanFilter
+import ExtendedKalmanFilter as EKF
+
 np.set_printoptions(precision=2)
 jacobian = np.zeros((4, 4))  # H
 T = 0.1  # okres probkowania
@@ -14,7 +17,6 @@ h_mat = np.zeros((4, 1))
 Q = np.array([[((S * (T ** 3)) / 3), ((S * (T ** 2)) / 2), 0, 0], [((S * (T ** 2)) / 2), (S * T), 0, 0],
               [0, 0, ((S * (T ** 3)) / 3), ((S * (T ** 2)) / 2)],
               [0, 0, ((S * (T ** 2)) / 2), (S * T)]])  # m. kow. zaklocen
-
 
 def predictEKF(anchor_coor=np.array([[0, 0], [4, 0], [0, 5], [4, 5]]),
                state_vect_ini=state_vect_input,
@@ -65,14 +67,22 @@ if __name__ == '__main__':
             except IndexError:
                 print("Index Error")
 
-    for row in lista:
-        pred, covariance, jacob = predictEKF(state_vect_ini=state_vect_input, err_cov_mat_ini=err_cov_mat_input)
-        state_vect_input, err_cov_mat_input = updateEKF(meas=row, state_vect_pred=pred, H_mat=jacob,
-                                                        err_cov_mat_pred=covariance)
-        with open("Wynik Kalmana.txt", mode='a') as resEKF:
-            resEKF.write(f'{state_vect_input}\n/////\n')
+    # for row in lista:
+    #     pred, covariance, jacob = predictEKF(state_vect_ini=state_vect_input, err_cov_mat_ini=err_cov_mat_input)
+    #     state_vect_input, err_cov_mat_input = updateEKF(meas=row, state_vect_pred=pred, H_mat=jacob,
+    #                                                     err_cov_mat_pred=covariance)
+    #     with open("Wynik Kalmana.txt", mode='a') as resEKF:
+    #         resEKF.write(f'{state_vect_input}\n/////\n')
 
     ###########################
+
+    EKF = ExtendedKalmanFilter.EKF()
+    for row in lista:
+        state_pred, err_cov_pred = EKF.predict()
+        EKF.update(meas= row, err_cov_mat_pred= err_cov_pred,state_pred = state_pred)
+        EKF.show_results()
+        with open("EKFClass.txt", mode='a') as resEKF:
+                resEKF.write(f'{EKF.show_results()}\n/////\n')
 
     #
     # pomiar_UWB = np.array([2.15, 4.22, 4.87, 0.8])
