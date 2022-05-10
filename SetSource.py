@@ -72,7 +72,7 @@ class CommunicationSource:
 
 
     def from_csvEKF(self):
-        with open('logi/08042022/mobilny.csv','r') as fp:
+        with open('logi/08042022/5meas.csv','r') as fp:
             passive_unit_com = csv.reader(fp)
             for value in passive_unit_com:
                 try:

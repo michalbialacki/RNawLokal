@@ -98,7 +98,7 @@ def learnMLP(dist_df, test_df):
     scaler.fit(dist_frame)
     scaled_dists = scaler.transform(dist_frame)
     X_trainX, X_testX, y_trainX, y_testX = train_test_split(scaled_dists, dist_df['X'], test_size=0.3, random_state=101)
-    model = MLPRegressor()
+    model = MLPRegressor(activation='tanh', solver= 'adam', )
     model.fit(X_trainX, y_trainX)
     predX = model.predict(X_testX)
 
