@@ -18,10 +18,10 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://czystysystempozycjonowania-default-rtdb.firebaseio.com/'
 })
 
-def update_firebase(wspolrzedna_x_uzytkownika, wspolrzedna_y_uzytkownika):
+def update_firebase(wspolrzedna_x_uzytkownika, wspolrzedna_y_uzytkownika, anchorID = "Warsaw"):
 
     ref = db.reference('/Zachowane Wspolrzedne')
-    ref.child('Wskazane Wspolrzedne Uzytkownika').update({
+    ref.child(anchorID).update({
         'wspolrzednaXSB3': str(wspolrzedna_x_uzytkownika),
         'wspolrzednaYSB3': str(wspolrzedna_y_uzytkownika)
     })

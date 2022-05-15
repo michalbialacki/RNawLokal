@@ -12,28 +12,29 @@ import pstats
 class CommunicationSource:
 
 
-    def __init__(self, option):
+    def __init__(self, option,name):
         self.option = option
+        self.name = name
         if self.option == 'OLS':
             with cProfile.Profile() as pr:
-                self.from_csvOLS()
+                self.from_csvOLS(self.name)
 
             stats = pstats.Stats(pr)
             stats.sort_stats(pstats.SortKey.TIME)
             stats.dump_stats(filename='OLSProf.prof')
         elif self.option == 'EKF':
             with cProfile.Profile() as pr:
-                self.from_csvEKF()
+                self.from_csvEKF(self.name)
 
             stats = pstats.Stats(pr)
             stats.sort_stats(pstats.SortKey.TIME)
             stats.dump_stats(filename='profile_MastersEKF.prof')
         elif self.option =='EKF_COM':
-            self.serial_port_commEKF()
+            self.serial_port_commEKF(self.name)
         else:
-            self.serial_port_comm()
+            self.serial_port_comm(self.name)
 
-    def from_csvOLS(self):
+    def from_csvOLS(self, name = "Tokyo"):
         with open('do_loop2.csv','r') as fp:
             passive_unit_com = csv.reader(fp)
             for value in passive_unit_com:
@@ -59,7 +60,7 @@ class CommunicationSource:
                             user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                             user1.active_unit_pos = user1.OLSAlgorythm()
                             print(user1)
-                            # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
+                            # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1], name)
                             # with open('wyniki.csv',mode='a') as wyniki:
                             #     wyniki.writelines(f'{user1.active_unit_pos}')
                             print('==============')
@@ -71,8 +72,8 @@ class CommunicationSource:
         plt.show()
 
 
-    def from_csvEKF(self):
-        with open('logi/08042022/5meas.csv','r') as fp:
+    def from_csvEKF(self, name = "Tokyo"):
+        with open('logi/08042022/1meas.csv','r') as fp:
             passive_unit_com = csv.reader(fp)
             for value in passive_unit_com:
                 try:
@@ -98,7 +99,7 @@ class CommunicationSource:
                             user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                             user1.active_unit_pos = user1.EKFAlgorythm()
                             print(f'{user1.active_unit_pos[0]};{user1.active_unit_pos[2]}')
-                            # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[2])
+                            Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[2], name)
                             print('==============')
                             plt.grid(True)
                             plt.xlim((-1*passive_xs[2], 2*passive_xs[2]))
@@ -112,7 +113,7 @@ class CommunicationSource:
         plt.show()
 
 
-    def serial_port_comm(self):
+    def serial_port_comm(self, name = "Tokyo"):
         user_tag = USB_comm.MobileUnit()
         user_tag.check()
         while True:
@@ -151,7 +152,7 @@ class CommunicationSource:
                                 user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                                 user1.active_unit_pos = user1.OLSAlgorythm()
                                 print(user1)
-                                Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1])
+                                Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1], name)
                                 print('==============')
                                 plt.grid(True)
                                 plt.plot(passive_xs, passive_ys, 'bo')
@@ -160,7 +161,7 @@ class CommunicationSource:
                                 plt.clf()
         plt.show()
 
-    def serial_port_commEKF(self):
+    def serial_port_commEKF(self,  name = "Tokyo"):
         user_tag = USB_comm.MobileUnit()
         user_tag.check()
         while True:
@@ -200,7 +201,7 @@ class CommunicationSource:
                                 user1.EKF.set_anchors(np.array([[0, 0], [2.15, 0], [2.15, 3.0], [2.15, 3.0]]))
                                 user1.active_unit_pos = user1.EKFAlgorythm()
                                 print(f'{user1.active_unit_pos[0]};{user1.active_unit_pos[2]}')
-                                # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[2])
+                                # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[2], name)
                                 # with open('wyniki.csv',mode='a') as wyniki:
                                 #     wyniki.writelines(f'{user1.active_unit_pos}')
                                 print('==============')
