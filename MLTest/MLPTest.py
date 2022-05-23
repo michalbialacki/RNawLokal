@@ -9,7 +9,8 @@ from sklearn.preprocessing import StandardScaler
 import SortCommunicates
 
 np.set_printoptions(precision=2)
-headers0 = 'DIST,ANCHS,AN0,ID0,X0,Y0,Z0,DIS0,AN1,ID1,X1,Y1,Z1,DIS1,AN2,ID2,X2,Y2,Z2,DIS2,AN3,ID3,X3,Y3,Z3,DIS3,POS,X,Y,Z,PREC'.split(
+headers0 = 'DIST,ANCHS,AN0,ID0,X0,Y0,Z0,DIS0,AN1,ID1,X1,Y1,Z1,DIS1,AN2,ID2,X2,Y2,Z2,DIS2,AN3,ID3,X3,Y3,Z3,DIS3,POS,X,' \
+           'Y,Z,PREC'.split(
     ',')
 headers1 = 'DIST,ANCHS,AN1,ID1,X1,Y1,Z1,DIS1,AN2,ID2,X2,Y2,Z2,DIS2,AN0,ID0,X0,Y0,Z0,DIS0,AN3,ID3,X3,Y3,Z3,DIS3,POS,X,Y,Z,PREC'.split(
     ',')
@@ -27,18 +28,19 @@ dirty_indices = meas_csv.index[meas_csv["ANCHS"] < 4].tolist()
 def createDF():
     noise = np.random.normal(0, 0.1, 1200)
 
-    first_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/08042022/1meas.csv', names=headers1,
+    first_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/18052022/stacjo/1meas.csv', names=headers1,
                                 on_bad_lines='skip')
-    snd_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/08042022/2meas.csv', names=headers2,
+    snd_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/18052022/stacjo/2meas.csv', names=headers2,
                               on_bad_lines='skip')
-    trd_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/08042022/3meas.csv', names=headers0,
+    trd_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/18052022/stacjo/3meas.csv', names=headers0,
                               on_bad_lines='skip')
-    frth_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/08042022/4meas.csv', names=headers0,
+    frth_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/18052022/stacjo/4meas.csv', names=headers0,
                                on_bad_lines='skip')
-    fith_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/08042022/5meas.csv', names=headers5,
+    fith_meas_df = pd.read_csv('D:/01Kody/PythonKody/GitSucked/logi/18052022/stacjo/5meas.csv', names=headers5,
                                on_bad_lines='skip')
 
     test_df = first_meas_df[headersSORTED]
+    # sns.heatmap(fith_meas_df.isnull(),yticklabels=False,cbar=False,cmap='viridis') #sprawdzanie ktory wiersz nie jest pelny
 
     first_meas_df = first_meas_df[first_meas_df['POS'].notna()]
     snd_meas_df = snd_meas_df[snd_meas_df['POS'].notna()]
@@ -49,44 +51,46 @@ def createDF():
     first_meas_df.drop(
         ['DIST', 'ANCHS', 'AN0', 'Z0', 'ID0', 'AN1', 'Z1', 'ID1', 'AN2', 'Z2', 'ID2', 'AN3', 'ID3', 'POS', 'X', 'Y',
          'Z', 'PREC'],
-        axis=1, inplace=True)  # (1.2;1.3)
+        axis=1, inplace=True)  # (0.3;-0.15)
     snd_meas_df.drop(
         ['DIST', 'ANCHS', 'AN0', 'ID0', 'AN1', 'Z1', 'ID1', 'AN2', 'Z2', 'ID2', 'AN3', 'Z3', 'ID3', 'POS', 'X', 'Y',
          'Z', 'PREC'],
         axis=1,
-        inplace=True)  # (0.6;2.2)
+        inplace=True)  # (0.0;-0.2)
     trd_meas_df.drop(
         ['DIST', 'ANCHS', 'AN0', 'Z0', 'ID0', 'AN1', 'Z1', 'ID1', 'AN2', 'Z2', 'ID2', 'AN3', 'Z3', 'ID3', 'POS', 'X',
          'Y', 'Z', 'PREC'],
-        axis=1, inplace=True)  # (1.9;0.35)
+        axis=1, inplace=True)  # (1.9;2.4)
     frth_meas_df.drop(
         ['DIST', 'ANCHS', 'AN0', 'Z0', 'ID0', 'AN1', 'Z1', 'ID1', 'AN2', 'Z2', 'ID2', 'AN3', 'Z3', 'ID3', 'X', 'Y',
          'Z', ], axis=1,
-        inplace=True)  # (1,4;2,9)
+        inplace=True)  # (0.3;2,45)
 
     fith_meas_df.drop(
         ['DIST', 'ANCHS', 'AN0', 'Z0', 'ID0', 'AN1', 'Z1', 'ID1', 'AN2', 'Z2', 'ID2', 'AN3', 'Z3', 'ID3', 'POS', 'X',
          'Y', 'Z', 'PREC'],
         axis=1,
-        inplace=True)  # (-0.6;0.5)
+        inplace=True)  # (1.1;1.1)
 
-    first_meas_df = first_meas_df[:1200]  # wchodzi
-    snd_meas_df = snd_meas_df[:1200]  # wchodzi
-    trd_meas_df = trd_meas_df[:1200]
-    frth_meas_df = frth_meas_df[:1200]
-    fith_meas_df = fith_meas_df[:1200]  # wchodzi
+    first_meas_df = first_meas_df[:550]  # wchodzi
+    snd_meas_df = snd_meas_df[:550]  # wchodzi
+    trd_meas_df = trd_meas_df[:550]
+    frth_meas_df = frth_meas_df[:550]
+    fith_meas_df = fith_meas_df[:550]  # wchodzi
 
-    for index in range(0, 1200):
-        first_meas_df['X'] = 1.2
-        first_meas_df['Y'] = 1.3
-        snd_meas_df['X'] = 0.6
-        snd_meas_df['Y'] = 2.2
+    for index in range(0, 550):
+        first_meas_df['X'] = 0.3
+        first_meas_df['Y'] = -0.15
+        snd_meas_df['X'] = 0.0
+        snd_meas_df['Y'] = -0.2
         trd_meas_df['X'] = 1.9
-        trd_meas_df['Y'] = 0.35
-        fith_meas_df['X'] = -0.7
-        fith_meas_df['Y'] = 0.6
+        trd_meas_df['Y'] = 2.4
+        frth_meas_df['X'] = 1.9
+        frth_meas_df['Y'] = 2.45
+        fith_meas_df['X'] = 1.1
+        fith_meas_df['Y'] = 1.1
 
-    dist_df = pd.concat([first_meas_df, snd_meas_df])
+    dist_df = pd.concat([first_meas_df, snd_meas_df, trd_meas_df, frth_meas_df])
     dist_df.to_csv(index=False)
     return dist_df, fith_meas_df
 
@@ -94,27 +98,24 @@ def createDF():
 def learnMLP(dist_df, test_df):
     # X
     dist_frame = dist_df[['DIS0', 'DIS1', 'DIS2', 'DIS3']]
-    scaler = StandardScaler()
-    scaler.fit(dist_frame)
-    scaled_dists = scaler.transform(dist_frame)
-    X_trainX, X_testX, y_trainX, y_testX = train_test_split(scaled_dists, dist_df['X'], test_size=0.3, random_state=101)
-    model = MLPRegressor(activation='tanh', solver= 'adam', )
+    X_trainX, X_testX, y_trainX, y_testX = train_test_split(dist_frame, dist_df['X'], test_size=0.3)
+    model = MLPRegressor(activation='tanh', solver='adam', )
     model.fit(X_trainX, y_trainX)
     predX = model.predict(X_testX)
 
     checkResult_df = test_df[['DIS0', 'DIS1', 'DIS2', 'DIS3']]
-    pred_frthX = model.predict(checkResult_df)
-    for num in pred_frthX:
+    pred_testX = model.predict(checkResult_df)
+    for num in pred_testX:
         print(num)
 
     # Y
-    X_trainY, X_testY, y_trainY, y_testY = train_test_split(scaled_dists, dist_df['Y'], test_size=0.3, random_state=101)
+    X_trainY, X_testY, y_trainY, y_testY = train_test_split(dist_frame, dist_df['Y'], test_size=0.3)
     model.fit(X_trainY, y_trainY)
     predY = model.predict(X_testY)
 
-    pred_frthY = model.predict(checkResult_df)
+    pred_testY = model.predict(checkResult_df)
 
-    return pred_frthX, pred_frthY
+    return pred_testX, pred_testY
 
 
 def sortDF(dist_df=pd.DataFrame([])):

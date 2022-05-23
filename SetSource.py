@@ -35,11 +35,11 @@ class CommunicationSource:
             self.serial_port_comm(self.name)
 
     def from_csvOLS(self, name = "Tokyo"):
-        with open('do_loop2.csv','r') as fp:
+        with open('logi/18052022/2meas.csv','r') as fp:
             passive_unit_com = csv.reader(fp)
             for value in passive_unit_com:
                 try:
-                    tb_spl = value[0].split(';')
+                    tb_spl = value
                 except:
                     print('Błędne odczytanie paczki, transmisja zakłócona')
                 else:
@@ -61,19 +61,22 @@ class CommunicationSource:
                             user1.active_unit_pos = user1.OLSAlgorythm()
                             print(user1)
                             # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1], name)
-                            # with open('wyniki.csv',mode='a') as wyniki:
-                            #     wyniki.writelines(f'{user1.active_unit_pos}')
+                            # with open('RMSE/2meas/X.csv',mode='a') as wyniki:
+                            #     wyniki.writelines(f'{user1.active_unit_pos[0]}\n')
+                            # with open('RMSE/2meas/Y.csv', mode='a') as wyniki:
+                            #     wyniki.writelines(f'{user1.active_unit_pos[1]}\n')
                             print('==============')
                             plt.grid(True)
                             plt.plot(passive_xs, passive_ys, 'bo')
                             plt.plot(user1.active_unit_pos[0], user1.active_unit_pos[1], 'r+')
                             plt.pause(0.001)
-                            plt.clf()
+                            # plt.clf()
         plt.show()
 
 
     def from_csvEKF(self, name = "Tokyo"):
-        with open('logi/08042022/1meas.csv','r') as fp:
+        result_list = []
+        with open('logi/18052022/stacjo/2meas.csv','r') as fp:
             passive_unit_com = csv.reader(fp)
             for value in passive_unit_com:
                 try:
@@ -99,15 +102,18 @@ class CommunicationSource:
                             user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                             user1.active_unit_pos = user1.EKFAlgorythm()
                             print(f'{user1.active_unit_pos[0]};{user1.active_unit_pos[2]}')
-                            Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[2], name)
+                            # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[2], name)
                             print('==============')
                             plt.grid(True)
-                            plt.xlim((-1*passive_xs[2], 2*passive_xs[2]))
-                            plt.ylim((-1*passive_ys[2], 2*passive_ys[2]))
+                            trasaX = [0.4,1.85,1.85,0.4,0.4]
+                            trasaY = [0,0,2.4,2.4,0]
+                            plt.xlim((-0.5*passive_xs[2], 2*passive_xs[2]))
+                            plt.ylim((-0.5*passive_ys[2], 1.2*passive_ys[2]))
+                            plt.plot(trasaX,trasaY,'xy-')
                             plt.plot(passive_xs, passive_ys, 'bo')
-                            plt.plot(user1.active_unit_pos[0], user1.active_unit_pos[2], 'r+')
+                            plt.plot(user1.active_unit_pos[0], user1.active_unit_pos[2], '.r-', markersize = 3)
                             plt.pause(0.001)
-                            plt.clf()
+                            # plt.clf()
                     except IndexError:
                         "IndexError"
         plt.show()
@@ -151,8 +157,7 @@ class CommunicationSource:
                             else:
                                 user1 = UserTag.MobileTag(passive_unit_xy, passive_unit_dist)
                                 user1.active_unit_pos = user1.OLSAlgorythm()
-                                print(user1)
-                                Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1], name)
+                                # Firebase_Communication.update_firebase(user1.active_unit_pos[0], user1.active_unit_pos[1], name)
                                 print('==============')
                                 plt.grid(True)
                                 plt.plot(passive_xs, passive_ys, 'bo')

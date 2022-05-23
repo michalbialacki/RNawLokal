@@ -5,8 +5,8 @@ import pandas as pd
 class EKF:
     np.set_printoptions(precision=2)
     jacobian = np.zeros((4, 4))  # H
-    T = 0.1  # okres probkowania
-    S = 0.00001  # widmowa gestosc mocy // zmieniac rzędem wielkości// sprawdzac przy zakretach
+    T = 0.1 # okres probkowania
+    S = 0.001  # widmowa gestosc mocy // zmieniac rzędem wielkości// sprawdzac przy zakretach
     state_vect_input = np.array([.01, .1, .01, .1]).reshape((4, 1))  # wektor stanu
     err_cov_mat_input = np.diag([100, 8.3, 100, 8.3])
     R = np.diag([0.01, 0.01, 0.01, 0.01])  # m. kowariancji bledow pomiarowych
