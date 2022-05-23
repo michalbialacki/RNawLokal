@@ -1,6 +1,6 @@
 import Firebase_Communication
 import SetSource
-#KYOTO222
+#EDO
 SetSource.CommunicationSource('EKF', name= "London")
 
 
